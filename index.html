@@ -42,7 +42,7 @@
             min-height: 120px;
         }
         .summary-item .value {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-size: 1.8rem;
             font-weight: 700;
             color: #1f2937;
         }
@@ -414,12 +414,12 @@
         }
 
         function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
             let textToCopy = '';
 
             if (elementId === 'pendingPaymentsText') {
                 textToCopy = 'Chalés com pagamento pendente:\n\n';
-                reservaData.chales.filter(c => c.remaining > 0 && c.remaining !== 20.00).forEach(item => {
+                const pendingChalets = reservaData.chales.filter(c => c.remaining > 0 && c.remaining !== 20.00);
+                pendingChalets.forEach(item => {
                     textToCopy += `${item.id} (${item.type})\n`;
                     textToCopy += `  Hóspedes: ${item.guests.join(', ')}\n`;
                     textToCopy += `  Pago: ${formatCurrency(item.paid)}\n`;
@@ -429,10 +429,12 @@
                 textToCopy = 'Pessoas com dados faltando:\n\n' + reservaData.pessoasDadosPendentes.join('\n');
             }
 
-            element.value = textToCopy;
-            element.select();
-            document.execCommand('copy');
-            alert('Informação copiada para a área de transferência!');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Informação copiada para a área de transferência!');
+            }).catch(err => {
+                console.error('Erro ao copiar texto: ', err);
+                alert('Falha ao copiar. O navegador pode não suportar a API de Clipboard.');
+            });
         }
 
         if ('serviceWorker' in navigator) {
