@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -42,7 +42,7 @@
             min-height: 120px;
         }
         .summary-item .value {
-            font-size: 1.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 700;
             color: #1f2937;
         }
@@ -124,6 +124,10 @@
             .summary-item {
                 padding: 1rem;
             }
+        }
+        .kpi-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -275,31 +279,32 @@
                 'Berenice', 'Frederico', 'Ligia', 'Vera', 'Creusa', 'Graça', 'Fernanda', 'Nelsa', 'Virginia', 'Silleide', 'Henrique', 'Paulo', 'Raquel', 'Rejane', 'Sérgio Lobatto', 'Claudio Nascimento', 'Gracia', 'Regina Santos', 'Nara'
             ],
             chales: [
-                { id: 'Chalé 1', type: 'CHALE DO LAGO', guests: ['Severiano Martinho Rodrigues', 'Simone Walter', 'Salomé Sousa'], total: 5300.00, paid: 1850.00, remaining: 3450.00, pax: 3, capacity: 3 },
+                { id: 'Chalé 1', type: 'CHALE DO LAGO', guests: ['Virginia Carneiro', 'Lia Sabino', 'Regina Carneiro'], total: 5300.00, paid: 2013.33, remaining: 3286.67, pax: 3, capacity: 3 },
                 { id: 'Chalé 2', type: 'CHALE DO LAGO', guests: ['Vera Collaco', 'Creusa Lopes', 'Graça Carvalho'], total: 5780.00, paid: 5780.00, remaining: 0.00, pax: 3, capacity: 3 },
-                { id: 'Chalé 3', type: 'CHALE DO LAGO', guests: ['Marilia Regis', 'Fernanda Regis', 'Nelsa Iglesias', 'Isabel Melania Moser'], total: 6880.00, paid: 0.00, remaining: 6880.00, pax: 4, capacity: 5 },
-                { id: 'Chalé 4', type: 'CHALE DO LAGO', guests: ['Virginia Carneiro', 'Lia Sabino', 'Regina Carneiro'], total: 5300.00, paid: 2013.33, remaining: 3286.67, pax: 3, capacity: 3 },
+                { id: 'Chalé 3', type: 'CHALE DO LAGO', guests: ['Severiano Martinho Rodrigues', 'Simone Walter', 'Salomé Sousa'], total: 5300.00, paid: 1850.00, remaining: 3450.00, pax: 3, capacity: 3 },
+                { id: 'Chalé 4', type: 'CHALE DO LAGO', guests: ['Fernanda Regis', 'Nelsa Iglesias', 'Isabel Melania Moser'], total: 5300.00, paid: 0.00, remaining: 5300.00, pax: 3, capacity: 3 },
                 { id: 'Chalé 5', type: 'CHALE DO LAGO', guests: ['Eloisa X', 'Claudio Mendonça'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 3 },
-                { id: 'Chalé 6', type: 'CHALE DO LAGO', guests: ['Rosangela Schmidt', 'Angela Ribeiro', 'Berenice Largura'], total: 5280.00, paid: 5280.00, remaining: 0.00, pax: 3, capacity: 3 },
+                { id: 'Chalé 6', type: 'CHALE DO LAGO', guests: ['Rosangela Schmidt', 'Angela Ribeiro'], total: 5280.00, paid: 5280.00, remaining: 0.00, pax: 2, capacity: 3 },
                 { id: 'Chalé 7', type: 'CHALE DO CAMPO', guests: ['Frederico Mello', 'Ligia Luz'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 3 },
                 { id: 'Chalé 9', type: 'CHALE DO LAGO', guests: ['Marilene Koerich', 'Martin Covello'], total: 3700.00, paid: 3700.00, remaining: 0.00, pax: 2, capacity: 3 },
                 { id: 'Chalé 10', type: 'CHALE DO LAGO', guests: ['Siuleide X', 'Henrique Balsini'], total: 3700.00, paid: 3680.00, remaining: 20.00, pax: 2, capacity: 3 },
                 { id: 'Chalé 11', type: 'CHALE DA MATA', guests: ['Sergio Galluf Pederneiras', 'Angela Pederneiras'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
                 { id: 'Chalé 12', type: 'CHALE DA MATA', guests: ['Paulo X', 'Raquel Damian'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
-                { id: 'Chalé 13', type: 'CHALE DA MATA', guests: ['Josane Soares', 'José Rui Soares'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
+                { id: 'Chalé 13', type: 'CHALE DA MATA', guests: ['Edison Antonio dos Santos', 'Sueli Carvalho dos Santos'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
                 { id: 'Chalé 14', type: 'CHALE DA MATA', guests: ['Rejane X', 'Sérgio Lobato'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
-                { id: 'Chalé 15', type: 'CHALE DA MATA', guests: ['Gracia X', 'Claudio Nascimento'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
-                { id: 'Chalé 16', type: 'CHALE DA MATA', guests: ['Regina Santos', 'Nara Santos'], total: 4436.00, paid: 1109.00, remaining: 3327.00, pax: 2, capacity: 2 },
-                { id: 'Chalé 17', type: 'CHALE DA MATA', guests: ['Zelita Eli Maciel Cordeiro dos Santos', 'Eduardo Cordeiro dos Santos Neto'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
+                { id: 'Chalé 15', type: 'CHALE DA MATA', guests: ['Vania Favaro', 'Marines Santos Favaro'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
+                { id: 'Chalé 16', type: 'CHALE DA MATA', guests: ['Zelita Eli Maciel Cordeiro dos Santos', 'Eduardo Cordeiro dos Santos Neto'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 2 },
+                { id: 'Chalé 17', type: 'CHALE DA MATA', guests: ['Regina Santos', 'Nara Santos', 'Marilia Caruso Mac Donald'], total: 4436.00, paid: 1109.00, remaining: 3327.00, pax: 3, capacity: 2 },
                 { id: 'Chalé 18', type: 'CHALE DA MATA', guests: ['Elisabeth X', 'Heitor Souza'], total: 4436.00, paid: 4416.00, remaining: 20.00, pax: 2, capacity: 2 },
                 { id: 'Apto 19', type: 'GUEST HOUSE', guests: ['Laura Koerich', 'Ester Macedo', 'Lucas Macedo', 'Natalia Cabral Varaschin', 'Heloisa Cabral Varaschin'], total: 8080.00, paid: 5280.00, remaining: 2800.00, pax: 5, capacity: 5 }
             ]
         };
 
+        // Calcule os dados agregados
         const totalPax = reservaData.chales.reduce((sum, chalet) => sum + chalet.pax, 0);
         const totalAmount = reservaData.chales.reduce((sum, chalet) => sum + chalet.total, 0);
         const totalCommission = totalAmount * 0.10;
-        const pendingAmount = reservaData.chales.reduce((sum, chalet) => sum + chalet.remaining, 0);
+        const pendingAmount = reservaData.chales.filter(c => c.remaining > 20.00).reduce((sum, chalet) => sum + chalet.remaining, 0);
         const totalChalets = reservaData.chales.length;
         const totalCapacity = reservaData.chales.reduce((sum, chalet) => sum + chalet.capacity, 0);
 
@@ -327,7 +332,7 @@
             const tbody = document.getElementById('pendingPaymentsTableBody');
             tbody.innerHTML = '';
             // Filtra os chalés com pagamento pendente, exceto os de R$ 20,00
-            const pendingChalets = reservaData.chales.filter(chalet => chalet.remaining > 0 && chalet.remaining !== 20.00);
+            const pendingChalets = reservaData.chales.filter(chalet => chalet.remaining > 20.00);
             document.getElementById('pendingChaletsCount').textContent = pendingChalets.length;
             pendingChalets.forEach(item => {
                 const row = document.createElement('tr');
@@ -344,7 +349,7 @@
         function populatePaidChaletsTable() {
             const tbody = document.getElementById('paidChaletsTableBody');
             tbody.innerHTML = '';
-            const paidChalets = reservaData.chales.filter(chalet => chalet.remaining === 0 || chalet.remaining === 20.00);
+            const paidChalets = reservaData.chales.filter(chalet => chalet.remaining <= 20.00);
             document.getElementById('paidChaletsCount').textContent = paidChalets.length;
             paidChalets.forEach(item => {
                 const row = document.createElement('tr');
