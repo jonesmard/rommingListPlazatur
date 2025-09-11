@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -124,10 +124,6 @@
             .summary-item {
                 padding: 1rem;
             }
-        }
-        .kpi-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -282,7 +278,7 @@
                 { id: 'Chalé 1', type: 'CHALE DO LAGO', guests: ['Virginia Carneiro', 'Lia Sabino', 'Regina Carneiro'], total: 5300.00, paid: 2013.33, remaining: 3286.67, pax: 3, capacity: 3 },
                 { id: 'Chalé 2', type: 'CHALE DO LAGO', guests: ['Vera Collaco', 'Creusa Lopes', 'Graça Carvalho'], total: 5780.00, paid: 5780.00, remaining: 0.00, pax: 3, capacity: 3 },
                 { id: 'Chalé 3', type: 'CHALE DO LAGO', guests: ['Severiano Martinho Rodrigues', 'Simone Walter', 'Salomé Sousa'], total: 5300.00, paid: 1850.00, remaining: 3450.00, pax: 3, capacity: 3 },
-                { id: 'Chalé 4', type: 'CHALE DO LAGO', guests: ['Fernanda Regis', 'Nelsa Iglesias', 'Isabel Melania Moser'], total: 5300.00, paid: 0.00, remaining: 5300.00, pax: 3, capacity: 3 },
+                { id: 'Chalé 4', type: 'CHALE DO LAGO', guests: ['Fernanda Regis', 'Nelsa Iglesias', 'Isabel Melania Moser'], total: 5300.00, paid: 1760.00, remaining: 3540.00, pax: 3, capacity: 3 },
                 { id: 'Chalé 5', type: 'CHALE DO LAGO', guests: ['Eloisa X', 'Claudio Mendonça'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 3 },
                 { id: 'Chalé 6', type: 'CHALE DO LAGO', guests: ['Rosangela Schmidt', 'Angela Ribeiro'], total: 5280.00, paid: 5280.00, remaining: 0.00, pax: 2, capacity: 3 },
                 { id: 'Chalé 7', type: 'CHALE DO CAMPO', guests: ['Frederico Mello', 'Ligia Luz'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 3 },
@@ -300,7 +296,6 @@
             ]
         };
 
-        // Calcule os dados agregados
         const totalPax = reservaData.chales.reduce((sum, chalet) => sum + chalet.pax, 0);
         const totalAmount = reservaData.chales.reduce((sum, chalet) => sum + chalet.total, 0);
         const totalCommission = totalAmount * 0.10;
@@ -331,7 +326,6 @@
         function populatePendingPaymentsTable() {
             const tbody = document.getElementById('pendingPaymentsTableBody');
             tbody.innerHTML = '';
-            // Filtra os chalés com pagamento pendente, exceto os de R$ 20,00
             const pendingChalets = reservaData.chales.filter(chalet => chalet.remaining > 20.00);
             document.getElementById('pendingChaletsCount').textContent = pendingChalets.length;
             pendingChalets.forEach(item => {
@@ -389,13 +383,10 @@
             const tbody = document.getElementById('fullyCompleteChaletsBody');
             tbody.innerHTML = '';
             const fullyComplete = reservaData.chales.filter(chalet => {
-                // Considera chalés com pagamento de R$ 0,00 ou R$ 20,00 como pagos
                 const isPaid = chalet.remaining === 0 || chalet.remaining === 20.00;
-                // Verifica se nenhum dos hóspedes está na lista de dados pendentes
                 const noMissingData = chalet.guests.every(guest => {
-                    // Normaliza os nomes para a verificação, removendo "X" e sobrenomes adicionais
                     const normalizedGuest = guest.split(' ')[0];
-                    return !reservaData.pessoasDadosPendentes.includes(normalizedGuest);
+                    return !reservaData.pessoasDadosPendentes.some(pending => pending.startsWith(normalizedGuest));
                 });
                 return isPaid && noMissingData;
             });
@@ -423,7 +414,7 @@
 
             if (elementId === 'pendingPaymentsText') {
                 textToCopy = 'Chalés com pagamento pendente:\n\n';
-                const pendingChalets = reservaData.chales.filter(c => c.remaining > 0 && c.remaining !== 20.00);
+                const pendingChalets = reservaData.chales.filter(c => c.remaining > 20.00);
                 pendingChalets.forEach(item => {
                     textToCopy += `${item.id} (${item.type})\n`;
                     textToCopy += `  Hóspedes: ${item.guests.join(', ')}\n`;
@@ -457,3 +448,4 @@
     </script>
 </body>
 </html>
+
