@@ -80,7 +80,7 @@
             padding: 0 0;
         }
         .accordion-content.expanded {
-            max-height: 1000px; /* Suficientemente grande para a maioria dos conteúdos */
+            max-height: none; /* Alterado para 'none' para mostrar todo o conteúdo */
             padding: 1rem 0;
         }
         .copy-btn {
@@ -264,6 +264,18 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Nova aba para Relação de Pessoas e Chalés -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion('guestList')">
+                        <span>Relação de Pessoas por Chalé</span>
+                        <span class="arrow-icon">&#9660;</span>
+                    </div>
+                    <div id="guestList" class="accordion-content">
+                        <ul id="guestListContainer" class="list-disc pl-5 space-y-2"></ul>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -290,7 +302,7 @@
                 { id: 'Chalé 14', type: 'CHALE DA MATA', guests: ['Rejane X', 'Sérgio Lobato'], total: 4456.00, paid: 4436.00, remaining: 20.00, pax: 2, capacity: 2 },
                 { id: 'Chalé 15', type: 'CHALE DA MATA', guests: ['Elisabeth X', 'Heitor Souza'], total: 4456.00, paid: 4416.00, remaining: 40.00, pax: 2, capacity: 2 },
                 { id: 'Chalé 18', type: 'CHALE DA MATA', guests: ['Vanio Favaro', 'Marines Santos Favaro'], total: 4456.00, paid: 4436.00, remaining: 20.00, pax: 2, capacity: 2 },
-                { id: 'Chalé 17', type: 'CHALE DA MATA', guests: ['Regina Santos', 'Nara Santos', 'Marilia Caruso Mac Donald'], total: 4456.00, paid: 1109.00, remaining: 3347.00, pax: 3, capacity: 2 },
+                { id: 'Chalé 17', type: 'CHALE DA MATA', guests: ['Regina Santos', 'Nara Santos', 'Marilia Caruso Mac Donald'], total: 5626.00, paid: 1109.00, remaining: 4517.00, pax: 3, capacity: 2 },
                 { id: 'Chalé 16', type: 'CHALE DA MATA', guests: ['Zelita Eli Maciel Cordeiro dos Santos', 'Eduardo Cordeiro dos Santos Neto'], total: 4456.00, paid: 4436.00, remaining: 20.00, pax: 2, capacity: 2 },
                 { id: 'Chalé 5', type: 'CHALE DO LAGO', guests: ['Eloisa X', 'Claudio Mendonça'], total: 4436.00, paid: 4436.00, remaining: 0.00, pax: 2, capacity: 3 }
             ]
@@ -299,7 +311,7 @@
         const totalPax = reservaData.chales.reduce((sum, chalet) => sum + chalet.pax, 0);
         const totalAmount = reservaData.chales.reduce((sum, chalet) => sum + chalet.total, 0);
         const totalCommission = totalAmount * 0.10;
-        const pendingAmount = reservaData.chales.filter(c => c.remaining > 20.01).reduce((sum, chalet) => sum + chalet.remaining, 0);
+        const pendingAmount = reservaData.chales.filter(c => c.remaining > 40.00).reduce((sum, chalet) => sum + chalet.remaining, 0);
         const totalChalets = reservaData.chales.length;
         const totalCapacity = reservaData.chales.reduce((sum, chalet) => sum + chalet.capacity, 0);
 
@@ -321,12 +333,13 @@
             populateMissingDataList();
             populateAvailableChaletsList();
             populateFullyCompleteChaletsTable();
+            populateGuestList();
         }
 
         function populatePendingPaymentsTable() {
             const tbody = document.getElementById('pendingPaymentsTableBody');
             tbody.innerHTML = '';
-            const pendingChalets = reservaData.chales.filter(chalet => chalet.remaining > 20.01);
+            const pendingChalets = reservaData.chales.filter(chalet => chalet.remaining > 40.00);
             document.getElementById('pendingChaletsCount').textContent = pendingChalets.length;
             pendingChalets.forEach(item => {
                 const row = document.createElement('tr');
@@ -343,7 +356,7 @@
         function populatePaidChaletsTable() {
             const tbody = document.getElementById('paidChaletsTableBody');
             tbody.innerHTML = '';
-            const paidChalets = reservaData.chales.filter(chalet => chalet.remaining <= 20.01);
+            const paidChalets = reservaData.chales.filter(chalet => chalet.remaining <= 40.00);
             document.getElementById('paidChaletsCount').textContent = paidChalets.length;
             paidChalets.forEach(item => {
                 const row = document.createElement('tr');
@@ -383,7 +396,7 @@
             const tbody = document.getElementById('fullyCompleteChaletsBody');
             tbody.innerHTML = '';
             const fullyComplete = reservaData.chales.filter(chalet => {
-                const isPaid = chalet.remaining === 0 || chalet.remaining <= 20.01;
+                const isPaid = chalet.remaining <= 40.00;
                 const noMissingData = chalet.guests.every(guest => {
                     const normalizedGuest = guest.split(' ')[0];
                     return !reservaData.pessoasDadosPendentes.some(pending => pending.startsWith(normalizedGuest));
@@ -401,6 +414,27 @@
             });
         }
 
+        function populateGuestList() {
+            const list = document.getElementById('guestListContainer');
+            list.innerHTML = '';
+            const sortedChalets = [...reservaData.chales].sort((a, b) => {
+                const idA = parseInt(a.id.replace(/\D/g, ''));
+                const idB = parseInt(b.id.replace(/\D/g, ''));
+                return idA - idB;
+            });
+            
+            sortedChalets.forEach(chalet => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <p class="font-bold">${chalet.id} (${chalet.type})</p>
+                    <ul class="list-disc pl-8">
+                        ${chalet.guests.map(guest => `<li>${guest}</li>`).join('')}
+                    </ul>
+                `;
+                list.appendChild(li);
+            });
+        }
+
         function toggleAccordion(id) {
             const content = document.getElementById(id);
             const header = content.previousElementSibling;
@@ -414,7 +448,7 @@
 
             if (elementId === 'pendingPaymentsText') {
                 textToCopy = 'Chalés com pagamento pendente:\n\n';
-                const pendingChalets = reservaData.chales.filter(c => c.remaining > 20.01);
+                const pendingChalets = reservaData.chales.filter(c => c.remaining > 40.00);
                 pendingChalets.forEach(item => {
                     textToCopy += `${item.id} (${item.type})\n`;
                     textToCopy += `  Hóspedes: ${item.guests.join(', ')}\n`;
